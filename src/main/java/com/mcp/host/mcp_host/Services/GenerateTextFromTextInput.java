@@ -6,11 +6,13 @@ import com.google.genai.Client;
 import com.google.genai.types.ClientOptions;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
+import org.springframework.beans.factory.annotation.Value;
 
 public class GenerateTextFromTextInput {
-
+    @Value("${API_KEY}")
+    static String apiKey;
     public static String inputToJSON(String input) {
-        String apiKey = "";
+
 
         String toolList = "MediaTool, ApplicationLauncher, FileManager, CommandPrompt, NetworkingCommand";
 
