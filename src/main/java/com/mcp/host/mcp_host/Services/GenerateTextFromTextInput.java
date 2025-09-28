@@ -3,15 +3,20 @@ package com.mcp.host.mcp_host.Services;
 
 
 import com.google.genai.Client;
-import com.google.genai.types.ClientOptions;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+
+@Component
 public class GenerateTextFromTextInput {
-    @Value("${API_KEY}")
-    static String apiKey;
-    public static String inputToJSON(String input) {
+    @Value("${apiKey}")
+    private String apiKey;
+
+    public String inputToJSON(String input) {
 
 
         String toolList = "MediaTool, ApplicationLauncher, FileManager, CommandPrompt, NetworkingCommand";
@@ -38,8 +43,8 @@ public class GenerateTextFromTextInput {
 
         String prompt = promptInstruction +"\n\n"+jsonSchemaExample;
         Client client = Client.builder()
-                                .apiKey(apiKey)
-                                .build();
+                .apiKey(apiKey)
+                .build();
 
         GenerateContentConfig config = GenerateContentConfig.builder()
                 .responseMimeType("application/json")

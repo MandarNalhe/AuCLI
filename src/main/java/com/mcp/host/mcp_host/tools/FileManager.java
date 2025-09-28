@@ -20,7 +20,7 @@ public class FileManager {
                 return listFiles(parameters.get("path"));
             case "createFile":
                 return createFile(parameters.get("path"),parameters.get("fileName"));
-            case "deleteFiles":
+            case "deleteFile":
                 return deleteFile(parameters.get("path"));
             case "openFile":
                 return openFile(parameters.get("path"));
