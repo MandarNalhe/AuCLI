@@ -17,7 +17,7 @@ public class MCPHost {
             case "CommandPrompt":
                 return CommandPrompt.execute(request.action,request.parameters);
 
-            case "NetworkingCommand" :
+            case "NetworkingCommands" :
                 return NetworkingCommands.execute(request.action,request.parameters);
 
             case "MediaTool":

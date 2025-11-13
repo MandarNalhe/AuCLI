@@ -7,7 +7,7 @@ public class MCPResponse {
     //data members
     public String status;
     public String message;
-
+    public MCPResponse(){}
 
     // parameterised constructor
     public MCPResponse(String status, String message) {

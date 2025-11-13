@@ -12,7 +12,7 @@ public class MediaTool {
     public static MCPResponse handleMedia(String action, Map<String, String> parameters){
         switch(action){
             case "playMedia":
-                return playMedia(parameters.get("path"));
+                return playMedia(parameters.get("path"),parameters.get("fileName"));
 
             case "openImage":
                 return openImage(parameters.get("path"),parameters.get("fileName"));
@@ -43,13 +43,26 @@ public class MediaTool {
     }
 
     //tool to play the audio or video
-    private static MCPResponse playMedia(String path){
+    private static MCPResponse playMedia(String path, String fileName) {
         try {
-            ProcessBuilder pb=new ProcessBuilder("cmd","/c","start"," ",path);
+            if (!path.endsWith("/") && !path.endsWith("\\")) {
+                path += "/";
+            }
+
+            String fullPath = path + fileName;
+            if (!fullPath.contains(".")) {
+                fullPath += ".mp4"; // Default fallback
+            }
+
+            System.out.println("🎬 Launching media: " + fullPath);
+
+            ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "start", "", fullPath);
             pb.start();
-            return new MCPResponse("success","Media Played Successfull");
+
+            return new MCPResponse("success", "Media Played Successfully: " + fullPath);
         } catch (IOException e) {
-            return new MCPResponse("error","Failed path defined might be wrong ");
+            return new MCPResponse("error", "Failed: " + e.getMessage());
         }
     }
+
 }

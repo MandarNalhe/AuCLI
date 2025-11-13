@@ -19,15 +19,29 @@ public class GenerateTextFromTextInput {
     public String inputToJSON(String input) {
 
 
-        String toolList = "MediaTool, ApplicationLauncher, FileManager, CommandPrompt, NetworkingCommand";
+        String toolList = "MediaTool, ApplicationLauncher, FileManager, CommandPrompt, NetworkingCommands";
 
-        String promptInstruction =  "You are a CLI command planner. Your task is to convert the user's natural language request " +
-                "into a valid JSON command. The 'tool' field MUST be one of the following: [" + toolList + "]. " +
-                "IMPORTANT PATH RULE: All file paths, regardless of the target operating system, MUST use the forward slash (/) as the directory separator. DO NOT use the backslash (\\) character. " +
-                "IMPORTANT ACTION RULE : All action should be in camel case with no space, hyphens or underscores"+
-                "For file operations, assume the user's Desktop path is 'Desktop'. " +
-                "The output JSON MUST strictly follow the example schema below. " +
-                "User Request: " + input;
+        String actionList =
+                "MediaTool: openImage, playMedia; " +
+                        "ApplicationLauncher: openApplication; " +
+                        "FileManager: copyFile, createFile, createFolder, deleteFile, listFiles, moveFile, openFile; " +
+                        "CommandPrompt: Independent, Dependent; " +
+                        "NetworkingCommands: network;";
+
+        String promptInstruction =
+                "You are a CLI command planner. Your task is to convert the user's natural language request " +
+                        "into a valid JSON command.\n" +
+                        "The 'tool' field MUST be one of the following: [" + toolList + "].\n" +
+                        "The 'action' field MUST be one of the following valid actions per tool:\n" +
+                        actionList + "\n" +
+                        "For action CommandPrompt limit parameters to path and command in dependent and only to command in independent"+
+                        "IMPORTANT PATH RULE: All file paths, regardless of the target operating system, MUST use the forward slash (/) as the directory separator. DO NOT use the backslash (\\) character.\n" +
+                        "IMPORTANT ACTION RULE: All actions should be camelCase with no spaces, hyphens, or underscores.\n" +
+                        "For file operations, assume the user's Desktop path is 'Desktop'.\n" +
+                        "The output JSON MUST strictly follow the example schema below.\n" +
+                        "always make sure to have the default drive as C drive with users as hp fo FileManager operations \n"+
+                        "User Request: " + input;
+
 
         String jsonSchemaExample =
                 "Example JSON output:\n" +

@@ -11,10 +11,10 @@ public class ApplicationLauncher {
         switch(action){
 
             case "openApplication":
-                return openApplication(parameters.get("appName"));
+                return openApplication(parameters.get("applicationName"));
 
             default:
-                return new MCPResponse("error","Unknown Application Launcher tool");
+                return new MCPResponse("error","Unknown Application Laun 33333333cher tool");
         }
     }
 

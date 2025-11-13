@@ -21,24 +21,24 @@ public class FileManager {
             case "createFile":
                 return createFile(parameters.get("path"),parameters.get("fileName"));
             case "deleteFile":
-                return deleteFile(parameters.get("path"));
+                return deleteFile(parameters.get("path"),parameters.get("fileName"));
             case "openFile":
-                return openFile(parameters.get("path"));
+                return openFile(parameters.get("path"),parameters.get("fileName"));
             case "moveFile":
-                return moveFile(parameters.get("source"),parameters.get("destination"));
+                return moveFile(parameters.get("sourcePath"),parameters.get("destinationPath"),parameters.get("fileName"));
             case "createFolder":
                 return createFolder(parameters.get("path"),parameters.get("fileName"));
             case "copyFile":
-                return copyFile(parameters.get("source"),parameters.get("destination"));
+                return copyFile(parameters.get("sourcePath"),parameters.get("destinationPath"),parameters.get("fileName"));
             default:
                 return new MCPResponse("error","Unknown File Manager Action");
         }
     }
 
     // tool to create the folder int the given location
-    private static MCPResponse createFolder(String path, String fileName) {
+    private static MCPResponse createFolder(String path, String folderName) {
         try {
-            Path folderPath = Paths.get(path, fileName);
+            Path folderPath = Paths.get(path, folderName);
             File folder = folderPath.toFile();
 
             if (folder.exists() && folder.isDirectory()) {
@@ -53,7 +53,7 @@ public class FileManager {
     }
 
     // tool to copy the file from one place to another
-    private static MCPResponse copyFile(String source, String destination){
+    private static MCPResponse copyFile(String source, String destination,String fileName){
         try {
             File sourceFile=new File(source);
             File destFile=new File(destination);
@@ -70,8 +70,8 @@ public class FileManager {
     }
 
     //tool to move the file from one location to another
-    private static MCPResponse moveFile(String source, String destination){
-        File sourceFile=new File(source);
+    private static MCPResponse moveFile(String source, String destination,String fileName){
+        File sourceFile=new File(source,fileName);
         File destFile=new File(destination);
         if(!sourceFile.exists()){
             return new MCPResponse("error","Defined paths are wrong !");
@@ -108,7 +108,7 @@ public class FileManager {
     }
 
     // tool to the open the file
-    private static MCPResponse openFile(String path){
+    private static MCPResponse openFile(String path,String fileName){
         try {
             File file=new File(path);
             if(!file.exists()){
@@ -140,8 +140,8 @@ public class FileManager {
     }
 
     // tool to delete the requested file path
-    private static MCPResponse deleteFile(String path){
-        File file=new File(path);
+    private static MCPResponse deleteFile(String path, String fileName){
+        File file=new File(path,fileName);
         if(!file.exists()){
             return new MCPResponse("error","File doesn't exists");
         }
